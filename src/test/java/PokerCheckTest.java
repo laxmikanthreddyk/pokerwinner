@@ -7,9 +7,9 @@ import java.util.HashMap;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class PokerCompareTest {
+public class PokerCheckTest {
 
-    PokerCompare pokerCompare = new PokerCompare();
+    PokerCheck pokerCheck = new PokerCheck();
     HashMap<String, ArrayList> cardsAndTypes;
 
     @Test
@@ -17,7 +17,7 @@ public class PokerCompareTest {
         cardsAndTypes = getCardInput(10, 11, 12,
                 13, 14, "H", "H",
                 "H", "H", "H");
-        boolean result = pokerCompare.checkRoyalFlush(cardsAndTypes);
+        boolean result = pokerCheck.checkRoyalFlush(cardsAndTypes);
         assertThat(result).isTrue();
     }
 
@@ -26,7 +26,7 @@ public class PokerCompareTest {
         cardsAndTypes = getCardInput(10, 11, 12,
                 13, 14, "H", "H",
                 "H", "H", "D");
-        boolean result = pokerCompare.checkRoyalFlush(cardsAndTypes);
+        boolean result = pokerCheck.checkRoyalFlush(cardsAndTypes);
         assertThat(result).isFalse();
     }
 
@@ -35,7 +35,7 @@ public class PokerCompareTest {
         cardsAndTypes = getCardInput(10, 11, 2,
                 9, 14, "H", "H",
                 "H", "H", "H");
-        boolean result = pokerCompare.checkFlush(cardsAndTypes);
+        boolean result = pokerCheck.checkFlush(cardsAndTypes);
         assertThat(result).isTrue();
     }
 
@@ -44,7 +44,7 @@ public class PokerCompareTest {
         cardsAndTypes = getCardInput(10, 11, 2,
                 9, 14, "H", "H",
                 "D", "H", "H");
-        boolean result = pokerCompare.checkFlush(cardsAndTypes);
+        boolean result = pokerCheck.checkFlush(cardsAndTypes);
         assertThat(result).isFalse();
     }
 
@@ -53,7 +53,7 @@ public class PokerCompareTest {
         cardsAndTypes = getCardInput(10, 11, 12,
                 9, 8, "H", "H",
                 "H", "H", "H");
-        boolean result = pokerCompare.checkStraightFlush(cardsAndTypes);
+        boolean result = pokerCheck.checkStraightFlush(cardsAndTypes);
         assertThat(result).isTrue();
     }
 
@@ -62,7 +62,7 @@ public class PokerCompareTest {
         cardsAndTypes = getCardInput(10, 11, 13,
                 9, 8, "H", "H",
                 "H", "H", "H");
-        boolean result = pokerCompare.checkStraightFlush(cardsAndTypes);
+        boolean result = pokerCheck.checkStraightFlush(cardsAndTypes);
         assertThat(result).isFalse();
     }
 
@@ -72,7 +72,7 @@ public class PokerCompareTest {
                 10, 8, "H", "D",
                 "F", "S", "H");
         String[] input = {"10H", "10D", "10F", "10S", "8H"};
-        boolean result = pokerCompare.checkFourOfAKind(cardsAndTypes);
+        boolean result = pokerCheck.checkFourOfAKind(cardsAndTypes);
         assertThat(result).isTrue();
     }
 
@@ -81,7 +81,7 @@ public class PokerCompareTest {
         cardsAndTypes = getCardInput(10, 10, 10,
                 9, 8, "H", "D",
                 "F", "S", "H");
-        boolean result = pokerCompare.checkFourOfAKind(cardsAndTypes);
+        boolean result = pokerCheck.checkFourOfAKind(cardsAndTypes);
         assertThat(result).isFalse();
     }
 
@@ -91,7 +91,7 @@ public class PokerCompareTest {
                 9, 9, "H", "D",
                 "F", "S", "H");
 
-        boolean result = pokerCompare.checkFullHouse(cardsAndTypes);
+        boolean result = pokerCheck.checkFullHouse(cardsAndTypes);
         assertThat(result).isTrue();
     }
 
@@ -101,7 +101,7 @@ public class PokerCompareTest {
                 9, 8, "H", "D",
                 "F", "S", "H");
 
-        boolean result = pokerCompare.checkFullHouse(cardsAndTypes);
+        boolean result = pokerCheck.checkFullHouse(cardsAndTypes);
         assertThat(result).isFalse();
     }
 
@@ -110,7 +110,16 @@ public class PokerCompareTest {
         cardsAndTypes = getCardInput(7, 6, 10,
                 9, 8, "H", "D",
                 "F", "S", "H");
-        boolean result = pokerCompare.checkStraight(cardsAndTypes);
+        boolean result = pokerCheck.checkStraight(cardsAndTypes);
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    public void CheckStraight_LowCard_A_true() {
+        cardsAndTypes = getCardInput(5, 4, 2,
+                3, 14, "H", "D",
+                "F", "S", "H");
+        boolean result = pokerCheck.checkStraight(cardsAndTypes);
         assertThat(result).isTrue();
     }
 
@@ -119,7 +128,7 @@ public class PokerCompareTest {
         cardsAndTypes = getCardInput(7, 6, 10,
                 9, 10, "H", "D",
                 "F", "S", "H");
-        boolean result = pokerCompare.checkStraight(cardsAndTypes);
+        boolean result = pokerCheck.checkStraight(cardsAndTypes);
         assertThat(result).isFalse();
     }
 
@@ -129,7 +138,7 @@ public class PokerCompareTest {
                 8, 9, "H", "D",
                 "F", "S", "H");
 
-        boolean result = pokerCompare.checkThreeOfAKind(cardsAndTypes);
+        boolean result = pokerCheck.checkThreeOfAKind(cardsAndTypes);
         assertThat(result).isTrue();
     }
 
@@ -139,7 +148,7 @@ public class PokerCompareTest {
                 8, 10, "H", "D",
                 "F", "S", "H");
 
-        boolean result = pokerCompare.checkThreeOfAKind(cardsAndTypes);
+        boolean result = pokerCheck.checkThreeOfAKind(cardsAndTypes);
         assertThat(result).isFalse();
     }
 
@@ -149,7 +158,7 @@ public class PokerCompareTest {
                 8, 10, "H", "D",
                 "F", "S", "H");
 
-        boolean result = pokerCompare.checkTwoPair(cardsAndTypes);
+        boolean result = pokerCheck.checkTwoPair(cardsAndTypes);
         assertThat(result).isTrue();
     }
 
@@ -159,7 +168,7 @@ public class PokerCompareTest {
                 8, 6, "H", "D",
                 "F", "S", "H");
 
-        boolean result = pokerCompare.checkTwoPair(cardsAndTypes);
+        boolean result = pokerCheck.checkTwoPair(cardsAndTypes);
         assertThat(result).isFalse();
     }
 
@@ -169,7 +178,7 @@ public class PokerCompareTest {
                 8, 6, "H", "D",
                 "F", "S", "H");
 
-        boolean result = pokerCompare.checkPair(cardsAndTypes);
+        boolean result = pokerCheck.checkPair(cardsAndTypes);
         assertThat(result).isTrue();
     }
 
@@ -179,78 +188,99 @@ public class PokerCompareTest {
                 8, 6, "H", "D",
                 "F", "S", "H");
 
-        boolean result = pokerCompare.checkPair(cardsAndTypes);
+        boolean result = pokerCheck.checkPair(cardsAndTypes);
         assertThat(result).isFalse();
     }
 
     @Test
     public void GetCardRank_RoyalFlush() {
         String[] input = {"10H", "JH", "QH", "KH", "AH"};
-        Integer result = pokerCompare.getCardRank(input);
+        Integer result = pokerCheck.getCardRank(input);
         assertThat(result).isEqualTo(1);
     }
 
     @Test
     public void GetCardRank_StraightFlush() {
         String[] input = {"10H", "JH", "QH", "KH", "9H"};
-        Integer result = pokerCompare.getCardRank(input);
+        Integer result = pokerCheck.getCardRank(input);
         assertThat(result).isEqualTo(2);
     }
 
     @Test
     public void GetCardRank_FourOfAKind() {
         String[] input = {"10H", "10D", "10F", "10S", "9H"};
-        Integer result = pokerCompare.getCardRank(input);
+        Integer result = pokerCheck.getCardRank(input);
         assertThat(result).isEqualTo(3);
     }
 
     @Test
     public void GetCardRank_FullHouse() {
         String[] input = {"10H", "10D", "10F", "9S", "9H"};
-        Integer result = pokerCompare.getCardRank(input);
+        Integer result = pokerCheck.getCardRank(input);
         assertThat(result).isEqualTo(4);
     }
 
     @Test
     public void GetCardRank_Flush() {
         String[] input = {"7H", "2H", "3H", "AH", "9H"};
-        Integer result = pokerCompare.getCardRank(input);
+        Integer result = pokerCheck.getCardRank(input);
         assertThat(result).isEqualTo(5);
     }
 
     @Test
     public void GetCardRank_Straight() {
         String[] input = {"7H", "6D", "5S", "4H", "8H"};
-        Integer result = pokerCompare.getCardRank(input);
+        Integer result = pokerCheck.getCardRank(input);
+        assertThat(result).isEqualTo(6);
+    }
+
+    @Test
+    public void GetCardRank_Straight_LowCard_A() {
+        String[] input = {"3H", "2D", "5S", "4H", "AH"};
+        Integer result = pokerCheck.getCardRank(input);
         assertThat(result).isEqualTo(6);
     }
 
     @Test
     public void GetCardRank_ThreeOfAKind() {
         String[] input = {"7H", "7D", "7S", "4H", "8H"};
-        Integer result = pokerCompare.getCardRank(input);
+        Integer result = pokerCheck.getCardRank(input);
         assertThat(result).isEqualTo(7);
     }
 
     @Test
     public void GetCardRank_TwoPair() {
         String[] input = {"7H", "7D", "4S", "4H", "8H"};
-        Integer result = pokerCompare.getCardRank(input);
+        Integer result = pokerCheck.getCardRank(input);
         assertThat(result).isEqualTo(8);
     }
 
     @Test
     public void GetCardRank_OnePair() {
         String[] input = {"7H", "7D", "5S", "4H", "8H"};
-        Integer result = pokerCompare.getCardRank(input);
+        Integer result = pokerCheck.getCardRank(input);
         assertThat(result).isEqualTo(9);
     }
 
     @Test
     public void GetCardRank_HighCard() {
         String[] input = {"7H", "4D", "2S", "KH", "AH"};
-        Integer result = pokerCompare.getCardRank(input);
+        Integer result = pokerCheck.getCardRank(input);
         assertThat(result).isEqualTo(10);
+    }
+
+    @Test
+    public void GetHighCard() {
+        String[] input = {"7H", "4D", "2S", "KH", "AH"};
+        Integer result = pokerCheck.getHighCard(input);
+        assertThat(result).isEqualTo(14);
+    }
+
+    @Test
+    public void GetHighCard_Straight_ACard() {
+        String[] input = {"2H", "3D", "4S", "5H", "AH"};
+        Integer result = pokerCheck.getHighCard(input);
+        assertThat(result).isEqualTo(5);
     }
 
     private ArrayList addCardType(String c1, String c2, String c3,

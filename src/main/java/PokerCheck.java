@@ -1,29 +1,6 @@
 import java.util.*;
 
-enum PokerRank {
-    ROYAL_FLUSH(1),
-    STRAIGHT_FLUSH(2),
-    FOUR_OF_KIND(3),
-    FULL_HOUSE(4),
-    FLUSH(5),
-    STRAIGHT(6),
-    THREE_OF_A_KIND(7),
-    TWO_PAIR(8),
-    ONE_PAIR(9),
-    HIGH_CARD(10);
-
-    private int rank;
-
-    public int getRank() {
-        return this.rank;
-    }
-
-    PokerRank(int rank) {
-        this.rank = rank;
-    }
-}
-
-public class PokerCompare {
+public class PokerCheck {
 
     public boolean checkRoyalFlush(HashMap<String, ArrayList> cardsAndTypes) {
         HashSet type = new HashSet(cardsAndTypes.get("Type"));
@@ -139,13 +116,29 @@ public class PokerCompare {
 
     public boolean checkStraight(HashMap<String, ArrayList> cardsAndTypes) {
         ArrayList<Integer> numCards = cardsAndTypes.get("Cards");
+
+        if (!checkCardSequence(numCards)) {
+            return true;
+        }
+        if (numCards.get(4) == 14) {
+            ArrayList<Integer> cards = new ArrayList<>();
+            cards.add(1);
+            cards.addAll(numCards.subList(0, 4));
+            if (!checkCardSequence(cards)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean checkCardSequence(ArrayList<Integer> numCards) {
         for (int i = 1; i < numCards.size(); i++) {
             int cardDiff = numCards.get(i) - numCards.get(i - 1);
             if ((cardDiff > 1) || (cardDiff == 0)) {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     public boolean checkThreeOfAKind(HashMap<String, ArrayList> cardsAndTypes) {
@@ -190,35 +183,38 @@ public class PokerCompare {
 
     public Integer getCardRank(String[] input) {
         HashMap<String, ArrayList> cardsAndTypes = getCardNumberAndType(input);
-        if(checkRoyalFlush(cardsAndTypes)) {
+        if (checkRoyalFlush(cardsAndTypes)) {
             return PokerRank.ROYAL_FLUSH.getRank();
-        }
-        else if(checkStraightFlush(cardsAndTypes)) {
+        } else if (checkStraightFlush(cardsAndTypes)) {
             return PokerRank.STRAIGHT_FLUSH.getRank();
-        }
-        else if(checkFourOfAKind(cardsAndTypes)) {
+        } else if (checkFourOfAKind(cardsAndTypes)) {
             return PokerRank.FOUR_OF_KIND.getRank();
-        }
-        else if(checkFullHouse(cardsAndTypes)) {
+        } else if (checkFullHouse(cardsAndTypes)) {
             return PokerRank.FULL_HOUSE.getRank();
-        }
-        else if(checkFlush(cardsAndTypes)) {
+        } else if (checkFlush(cardsAndTypes)) {
             return PokerRank.FLUSH.getRank();
-        }
-        else if(checkStraight(cardsAndTypes)) {
+        } else if (checkStraight(cardsAndTypes)) {
             return PokerRank.STRAIGHT.getRank();
-        }
-        else if(checkThreeOfAKind(cardsAndTypes)) {
+        } else if (checkThreeOfAKind(cardsAndTypes)) {
             return PokerRank.THREE_OF_A_KIND.getRank();
-        }
-        else if(checkTwoPair(cardsAndTypes)) {
+        } else if (checkTwoPair(cardsAndTypes)) {
             return PokerRank.TWO_PAIR.getRank();
-        }
-        else if(checkPair(cardsAndTypes)) {
+        } else if (checkPair(cardsAndTypes)) {
             return PokerRank.ONE_PAIR.getRank();
-        }
-        else {
+        } else {
             return PokerRank.HIGH_CARD.getRank();
         }
+    }
+
+    public Integer getHighCard(String[] input) {
+        HashMap<String, ArrayList> cardsAndTypes = getCardNumberAndType(input);
+        ArrayList<Integer> numCards = cardsAndTypes.get("Cards");
+        if (checkStraight(cardsAndTypes)) {
+            if (numCards.get(4) ==14 && numCards.get(3) == 5) {
+                return numCards.get(3);
+            }
+            return numCards.get(4);
+        }
+        return numCards.get(4);
     }
 }

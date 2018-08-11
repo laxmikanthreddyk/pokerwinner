@@ -4,10 +4,12 @@ public class Main {
 
     public static void main(String args[]) {
 
-//        Scanner in = new Scanner(System.in);
-//        String s = in. nextLine();
-//        System.out.println(s);
-        String[] input = {"2D","3H",""};
+       Scanner in = new Scanner(System.in);
+        String sInput = in.nextLine();
+        System.out.println(sInput);
+        String[] input = sInput.split(" ");
+        PokerPlayWinner pokerPlayWinner = new PokerPlayWinner();
+        System.out.println("Winner of Poker Play -> " + pokerPlayWinner.checkWinner(input));
     }
 
 }
