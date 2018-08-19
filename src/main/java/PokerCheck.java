@@ -210,11 +210,87 @@ public class PokerCheck {
         HashMap<String, ArrayList> cardsAndTypes = getCardNumberAndType(input);
         ArrayList<Integer> numCards = cardsAndTypes.get("Cards");
         if (checkStraight(cardsAndTypes)) {
-            if (numCards.get(4) ==14 && numCards.get(3) == 5) {
+            if (numCards.get(4) == 14 && numCards.get(3) == 5) {
                 return numCards.get(3);
             }
             return numCards.get(4);
         }
         return numCards.get(4);
     }
+
+    public PokerWinner getCardRank(String[] input, String[] dealInput) {
+        PokerWinner winner;
+        Arrays.sort(dealInput);
+        winner = getDealRank(input, dealInput);
+
+        for (int i = 0; i < input.length; i++) {
+            PokerWinner singleCardWinner;
+            singleCardWinner = getDealRank(new String[]{input[i]}, dealInput);
+            winner = singleCardWinner.getRank() < winner.getRank() ? singleCardWinner : winner;
+        }
+
+        return winner;
+
+    }
+
+    private PokerWinner getDealRank(String[] input, String[] dealInput) {
+        Integer rank = Integer.MAX_VALUE;
+        PokerWinner winner = new PokerWinner();
+        List<String[]> dealCombinations = getDealCardCombinations(dealInput, input.length);
+
+        for (String[] dealCards : dealCombinations
+                ) {
+            String[] inputCards = new String[5];
+            copyArrays(input, dealCards, inputCards);
+            Integer cardRank = getCardRank(inputCards);
+            if (cardRank < rank) {
+                rank = cardRank;
+                winner.setRank(rank);
+                winner.setCards(inputCards);
+            }
+        }
+
+        return winner;
+    }
+
+    private void copyArrays(String[] input, String[] dealCards, String[] inputCards) {
+        System.arraycopy(dealCards, 0, inputCards, 0, dealCards.length);
+        System.arraycopy(input, 0, inputCards, dealCards.length, input.length);
+    }
+
+    private List<String[]> getDealCardCombinations(String[] dealInput, int length) {
+        List<String[]> dealCombinations = new ArrayList<>();
+        if (length == 2) {
+            for (int i = 0; i < dealInput.length; i++) {
+                for (int j = i + 1; j < dealInput.length; j++) {
+                    String[] dealCombination = new String[3];
+                    dealCombinations.add(getDealCombination(dealInput, i, j, dealCombination));
+                }
+            }
+        }
+        if (length == 1) {
+            for (int i = 0; i < dealInput.length; i++) {
+                String[] dealCombination = new String[4];
+                dealCombinations.add(getDealCombination(dealInput, i, -1, dealCombination));
+            }
+        }
+        return dealCombinations;
+    }
+
+    private String[] getDealCombination(String[] dealInput, int i, int j, String[] dealCombination) {
+        int k = 0;
+        for (int l = 0; l < dealInput.length; l++) {
+            if ((l != i) && (l != j)) {
+                dealCombination[k] = dealInput[l];
+                k++;
+            }
+        }
+        return dealCombination;
+    }
+
+
 }
+
+
+
+

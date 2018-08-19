@@ -88,4 +88,40 @@ public class PokerPlayWinnerTest {
         assertThat(result).isEqualTo(P1_WINNER);
     }
 
+    @Test
+    public void DealPokerWinner_P1P2_P1Win() {
+        String[] input = {"10D", "KD", "8S", "7H", "AD", "QD", "JD", "4F", "8D"};
+        String result = pokerPlayWinner.checkDealWinner(input);
+        assertThat(result).isEqualTo(P1_WINNER);
+
+    }
+
+    @Test
+    public void DealPokerWinner_P1P2_P2Win() {
+        String[] input = {"8S", "7H", "10D", "KD", "AD", "QD", "JD", "4F", "8D"};
+        String result = pokerPlayWinner.checkDealWinner(input);
+        assertThat(result).isEqualTo(P2_WINNER);
+    }
+
+    @Test
+    public void DealPokerWinner_P1P2_Draw() {
+        String[] input = {"8S", "7H", "10D", "7D", "7S", "7F", "JD", "4H", "2D"};
+        String result = pokerPlayWinner.checkDealWinner(input);
+        assertThat(result).isEqualTo(DRAW);
+    }
+
+    @Test
+    public void DealPokerWinner_P1P2_ALow_P2Win() {
+        String[] input = {"AS", "7H", "6D", "7D", "3S", "5F", "JD", "4H", "2D"};
+        String result = pokerPlayWinner.checkDealWinner(input);
+        assertThat(result).isEqualTo(P2_WINNER);
+    }
+
+    @Test
+    public void DealPokerWinner_P1P2_High_P1Win() {
+        String[] input = {"AS", "7H", "6H", "KD", "3S", "3F", "QD", "4H", "2D"};
+        String result = pokerPlayWinner.checkDealWinner(input);
+        assertThat(result).isEqualTo(P1_WINNER);
+    }
+
 }

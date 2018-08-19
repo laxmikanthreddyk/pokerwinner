@@ -283,6 +283,175 @@ public class PokerCheckTest {
         assertThat(result).isEqualTo(5);
     }
 
+    @Test
+    public void GetCardRank_Dealer_TwoCards_RoyalFlush() {
+        String[] input = {"10H", "JH"};
+        String[] dealInput = { "7F", "AD", "QH", "KH", "AH"};
+        Integer result = pokerCheck.getCardRank(input, dealInput).getRank();
+        assertThat(result).isEqualTo(1);
+    }
+
+    @Test
+    public void GetCardRank_Dealer_SingleCard_RoyalFlush() {
+        String[] input = {"3H", "JH"};
+        String[] dealInput = { "10H", "AD", "QH", "KH", "AH"};
+        Integer result = pokerCheck.getCardRank(input, dealInput).getRank();
+        assertThat(result).isEqualTo(1);
+    }
+
+    @Test
+    public void GetCardRank_Dealer_TwoCards_StraightFlush() {
+        String[] input = {"9H", "JH"};
+        String[] dealInput = { "7F", "AD", "QH", "KH", "10H"};
+        Integer result = pokerCheck.getCardRank(input, dealInput).getRank();
+        assertThat(result).isEqualTo(2);
+    }
+
+    @Test
+    public void GetCardRank_Dealer_SingleCard_StraightFlush() {
+        String[] input = {"3H", "JH"};
+        String[] dealInput = { "9H", "AD", "QH", "KH", "10H"};
+        Integer result = pokerCheck.getCardRank(input, dealInput).getRank();
+        assertThat(result).isEqualTo(2);
+    }
+
+    @Test
+    public void GetCardRank_Dealer_TwoCards_FourOfAKind() {
+        String[] input = {"9H", "9D"};
+        String[] dealInput = { "7F", "9F", "9S", "KH", "10H"};
+        Integer result = pokerCheck.getCardRank(input, dealInput).getRank();
+        assertThat(result).isEqualTo(3);
+    }
+
+    @Test
+    public void GetCardRank_Dealer_SingleCard_FourOfAKind() {
+        String[] input = {"3H", "JH"};
+        String[] dealInput = { "JF", "JS", "JD", "KH", "10H"};
+        Integer result = pokerCheck.getCardRank(input, dealInput).getRank();
+        assertThat(result).isEqualTo(3);
+    }
+
+    @Test
+    public void GetCardRank_Dealer_TwoCards_FullHouse() {
+        String[] input = {"9H", "9D"};
+        String[] dealInput = { "7F", "10F", "10S", "KH", "10H"};
+        Integer result = pokerCheck.getCardRank(input, dealInput).getRank();
+        assertThat(result).isEqualTo(4);
+    }
+
+    @Test
+    public void GetCardRank_Dealer_SingleCard_FullHouse() {
+        String[] input = {"3H", "KH"};
+        String[] dealInput = { "JF", "JS", "JD", "KH", "10H"};
+        Integer result = pokerCheck.getCardRank(input, dealInput).getRank();
+        assertThat(result).isEqualTo(4);
+    }
+
+    @Test
+    public void GetCardRank_Dealer_TwoCards_Flush() {
+        String[] input = {"9H", "3H"};
+        String[] dealInput = { "4H", "6F", "2S", "KH", "AH"};
+        Integer result = pokerCheck.getCardRank(input, dealInput).getRank();
+        assertThat(result).isEqualTo(5);
+    }
+
+    @Test
+    public void GetCardRank_Dealer_SingleCard_Flush() {
+        String[] input = {"3H", "AF"};
+        String[] dealInput = { "JH", "6H", "2D", "KH", "10H"};
+        Integer result = pokerCheck.getCardRank(input, dealInput).getRank();
+        assertThat(result).isEqualTo(5);
+    }
+
+    @Test
+    public void GetCardRank_Dealer_TwoCards_Straight() {
+        String[] input = {"9H", "JH"};
+        String[] dealInput = { "4H", "10F", "8S", "KD", "QH"};
+        Integer result = pokerCheck.getCardRank(input, dealInput).getRank();
+        assertThat(result).isEqualTo(6);
+    }
+
+    @Test
+    public void GetCardRank_Dealer_SingleCard_Straight() {
+        String[] input = {"3H", "JH"};
+        String[] dealInput = { "9F", "8S", "QD", "KH", "10H"};
+        Integer result = pokerCheck.getCardRank(input, dealInput).getRank();
+        assertThat(result).isEqualTo(6);
+    }
+
+    @Test
+    public void GetCardRank_Dealer_TwoCards_ThreeOfAKind() {
+        String[] input = {"9H", "9D"};
+        String[] dealInput = { "4H", "9F", "8S", "KH", "QH"};
+        Integer result = pokerCheck.getCardRank(input, dealInput).getRank();
+        assertThat(result).isEqualTo(7);
+    }
+
+    @Test
+    public void GetCardRank_Dealer_SingleCard_ThreeOfAKind() {
+        String[] input = {"3H", "JH"};
+        String[] dealInput = { "JF", "JS", "9D", "KH", "10H"};
+        Integer result = pokerCheck.getCardRank(input, dealInput).getRank();
+        assertThat(result).isEqualTo(7);
+    }
+
+    @Test
+    public void GetCardRank_Dealer_TwoCards_TwoPair() {
+        String[] input = {"9H", "9D"};
+        String[] dealInput = { "4H", "8F", "8S", "KH", "QH"};
+        Integer result = pokerCheck.getCardRank(input, dealInput).getRank();
+        assertThat(result).isEqualTo(8);
+    }
+
+    @Test
+    public void GetCardRank_Dealer_SingleCard_TwoPair() {
+        String[] input = {"3H", "JH"};
+        String[] dealInput = { "JF", "10S", "9D", "KH", "10H"};
+        Integer result = pokerCheck.getCardRank(input, dealInput).getRank();
+        assertThat(result).isEqualTo(8);
+    }
+
+    @Test
+    public void GetCardRank_Dealer_TwoCards_OnePair() {
+        String[] input = {"9H", "9D"};
+        String[] dealInput = { "4H", "8F", "6S", "KH", "QH"};
+        Integer result = pokerCheck.getCardRank(input, dealInput).getRank();
+        assertThat(result).isEqualTo(9);
+    }
+
+    @Test
+    public void GetCardRank_Dealer_SingleCard_OnePair() {
+        String[] input = {"3H", "JH"};
+        String[] dealInput = { "JF", "4S", "9D", "KH", "10H"};
+        Integer result = pokerCheck.getCardRank(input, dealInput).getRank();
+        assertThat(result).isEqualTo(9);
+    }
+
+    @Test
+    public void GetCardRank_Dealer_TwoCards_HighCard() {
+        String[] input = {"9H", "AD"};
+        String[] dealInput = { "4H", "8F", "6S", "KH", "QH"};
+        Integer result = pokerCheck.getCardRank(input, dealInput).getRank();
+        assertThat(result).isEqualTo(10);
+    }
+
+    @Test
+    public void GetCardRank_Dealer_SingleCard_HighCard() {
+        String[] input = {"3H", "KH"};
+        String[] dealInput = { "JF", "4S", "9D", "5H", "10H"};
+        Integer result = pokerCheck.getCardRank(input, dealInput).getRank();
+        assertThat(result).isEqualTo(10);
+    }
+
+    @Test
+    public void GetCardRank_Dealer_SingleCard_BestCards() {
+        String[] input = {"3H", "KH"};
+        String[] dealInput = { "JF", "QS", "9D", "5H", "10H"};
+        String[] result = pokerCheck.getCardRank(input, dealInput).getCards();
+        assertThat(result).contains("KH","JF","QS","9D","10H");
+    }
+
+
     private ArrayList addCardType(String c1, String c2, String c3,
                                   String c4, String c5) {
         String[] cardTypes = {c1, c2, c3, c4, c5};
